@@ -10,15 +10,15 @@ function M.show_prayertimes()
         ["Isha"] = "0",
         ["Midnight"] = "0",
     }
+    local location = "Cambridge, UK"
 
     local Popup = require("nui.popup")
     local NuiText = require("nui.text")
     local NuiLine = require("nui.line")
     local event = require("nui.utils.autocmd").event
 
-    local time = os.date("*t")
-    local current_time = time.hour .. ":" .. time.min
-    local title = " Prayer Times - " .. current_time .. " "
+    local current_time = os.date("*t").hour .. ":" .. os.date("*t").min
+    local title = "Prayer Times - " .. current_time
 
     local popup = Popup({
         enter = true,
@@ -26,8 +26,10 @@ function M.show_prayertimes()
         border = {
             style = "rounded",
             text = {
-                top = title,
+                top = " " .. title .. " ",
                 top_align = "center",
+                bottom = " " .. location .. " ",
+                bottom_align = "center",
             }
         },
         position = "50%",
@@ -49,7 +51,7 @@ function M.show_prayertimes()
     -- set content
     local linenr_start = 1
     for prayer, time in pairs(prayer_and_times) do
-        local prayer_with_time = NuiLine({ NuiText(prayer .. ": " .. time) })
+        local prayer_with_time = NuiLine({ NuiText(prayer .. " - " .. time) })
         prayer_with_time:render(popup.bufnr, -1, linenr_start)
         linenr_start = linenr_start + 1
     end
