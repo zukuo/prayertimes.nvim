@@ -1,5 +1,7 @@
 local M = {}
 
+local curl = require("plenary.curl")
+
 function M.get_current_time(hr_type)
     return os.date("%H:%M")
 end
@@ -12,7 +14,7 @@ function M.pad_text(text)
     return " " .. text .. " "
 end
 
-M.prayers = {
+M.chosen_prayers = {
     "Fajr",
     "Sunrise",
     "Dhuhr",
@@ -23,17 +25,30 @@ M.prayers = {
 }
 
 M.times = {
-    ["Fajr"] = "00:00",
-    ["Sunrise"] = "00:00",
-    ["Dhuhr"] = "00:00",
-    ["Asr"] = "00:00",
-    ["Maghrib"] = "00:00",
-    ["Isha"] = "00:00",
-    ["Midnight"] = "00:00",
+    Fajr = "00:00",
+    Sunrise = "00:00",
+    Dhuhr = "00:00",
+    Asr = "00:00",
+    Maghrib = "00:00",
+    Isha = "00:00",
+    Midnight = "00:00",
 }
 
-function M.generate_time_items()
+function M.update_times()
+    local today = os.date("%d-%m-%Y")
+    local base = "http://api.aladhan.com/v1/timingsByCity/"
+    local query = "?city=Cambridge&country=GB"
 
+    local res = curl.get {
+        url = base .. today .. query,
+        accept = "application/json",
+    }
+
+    local data = vim.fn.json_decode(res.body).data
+
+    for _, prayer in pairs(M.chosen_prayers) do
+        M.times[prayer] = data.timings[prayer]
+    end
 end
 
 return M

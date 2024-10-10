@@ -11,7 +11,7 @@ function M.show_prayertimes()
     local api = require("prayertimes.api")
     local title = "Prayer Times - " .. api.get_current_time()
     local footer = "Cambridge, UK - " .. api.get_current_date()
-    local width, height = 25, #api.prayers
+    local width, height = 25, #api.chosen_prayers
 
     -- Define Popup Settings
     local popup = Popup({
@@ -49,12 +49,13 @@ function M.show_prayertimes()
     end, { noremap = true })
 
     -- Draw Prayer & Times to Buffer
-    for index, prayer in pairs(api.prayers) do
-        local line_content = prayer .. ": " .. api.times[prayer]
+    api.update_times()
+    for index, prayer in pairs(api.chosen_prayers) do
+        local num_of_spaces = width - #prayer - #api.times[prayer]
+        local line_content = prayer .. string.rep(" ", num_of_spaces) .. api.times[prayer]
         local prayer_with_time = NuiLine({ NuiText(line_content) })
         prayer_with_time:render(popup.bufnr, -1, index)
     end
-
 end
 
 return M
