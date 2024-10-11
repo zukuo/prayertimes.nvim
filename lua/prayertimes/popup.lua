@@ -9,9 +9,11 @@ function M.show_prayertimes()
 
     -- Import prayertimes.nvim API and set vars
     local api = require("prayertimes.api")
+    local config = require("prayertimes.config").options
+
     local title = "Prayer Times - " .. api.get_current_time()
-    local footer = "Cambridge, UK - " .. api.get_current_date()
-    local width, height = 25, #api.chosen_prayers
+    local footer = string.format("%s - %s", config.location.city, api.get_current_date())
+    local width, height = math.max(#title + 4, #footer + 4), #api.chosen_prayers
 
     -- Define Popup Settings
     local popup = Popup({
