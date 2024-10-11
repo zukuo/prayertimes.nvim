@@ -8,7 +8,7 @@ function M.get_current_time(hr_type)
 end
 
 function M.get_current_date(hr_type)
-    return os.date("%a")
+    return os.date("%d %b")
 end
 
 function M.pad_text(text)
@@ -35,6 +35,8 @@ M.times = {
     Midnight = "00:00",
 }
 
+M.data = {}
+
 function M.get_aladhan_times()
     local today = os.date("%d-%m-%Y")
     local base = "http://api.aladhan.com/v1/timingsByCity/"
@@ -52,9 +54,9 @@ function M.get_aladhan_times()
 end
 
 function M.update_times()
-    local data = M.get_aladhan_times()
+    M.data = M.get_aladhan_times()
     for _, prayer in pairs(M.chosen_prayers) do
-        M.times[prayer] = data.timings[prayer]
+        M.times[prayer] = M.data.timings[prayer]
     end
 end
 

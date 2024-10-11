@@ -20,7 +20,7 @@ local defaults = {
 
 function M.setup(opts)
     M.options = vim.tbl_deep_extend("force", defaults, opts or {})
-    vim.keymap.set("n", "<leader>pt", function() require("prayertimes.popup").show_prayertimes() end)
+    vim.api.nvim_create_user_command("Prayertimes", function () require("prayertimes.popup").show_prayertimes() end, {})
 end
 
 return M
