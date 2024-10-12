@@ -13,24 +13,27 @@ end
 
 function M.make_tune_list()
     local list = ""
-    for _, tune_name in pairs(M.tune_names) do
-        list = list .. M.tune[tune_name] .. ","
+    for _, tune in pairs(M.tune) do
+        list = list .. config.tune[string.lower(tune)] .. ","
     end
     return list
 end
 
-
-M.chosen_prayers = {
+M.shown_prayers = {
+    "Imsak",
     "Fajr",
     "Sunrise",
     "Dhuhr",
     "Asr",
     "Maghrib",
+    "Sunset",
     "Isha",
     "Midnight",
+    "First Third",
+    "Last Third",
 }
 
-M.tune_names = {
+M.tune = {
     "Imsak",
     "Fajr",
     "Sunrise",
@@ -43,25 +46,17 @@ M.tune_names = {
 }
 
 M.times = {
-    Fajr     = "00:00",
-    Sunrise  = "00:00",
-    Dhuhr    = "00:00",
-    Asr      = "00:00",
-    Maghrib  = "00:00",
-    Isha     = "00:00",
-    Midnight = "00:00",
-}
-
-M.tune = {
-    Imsak    = config.tune.imsak,
-    Fajr     = config.tune.fajr,
-    Sunrise  = config.tune.sunrise,
-    Dhuhr    = config.tune.dhuhr,
-    Asr      = config.tune.asr,
-    Maghrib  = config.tune.maghrib,
-    Sunset   = config.tune.sunset,
-    Isha     = config.tune.isha,
-    Midnight = config.tune.midnight,
+    Imsak          = "00:00",
+    Fajr           = "00:00",
+    Sunrise        = "00:00",
+    Dhuhr          = "00:00",
+    Asr            = "00:00",
+    Maghrib        = "00:00",
+    Sunset         = "00:00",
+    Isha           = "00:00",
+    Midnight       = "00:00",
+    ["First Third"] = "00:00",
+    ["Last Third"]  = "00:00",
 }
 
 M.queries = {
@@ -90,10 +85,23 @@ function M.get_aladhan_times()
     return vim.fn.json_decode(res.body).data
 end
 
+function M.update_shown_prayers()
+    local new_list = {}
+    for _, shown_prayer in pairs(M.shown_prayers) do
+        local formatted_prayer = shown_prayer:lower():gsub("%s+", "")
+        if config.shown_prayers[formatted_prayer] then
+            table.insert(new_list, shown_prayer)
+        end
+    end
+    M.shown_prayers = new_list
+end
+
 function M.update_times()
+    M.update_shown_prayers()
     M.data = M.get_aladhan_times()
-    for _, prayer in pairs(M.chosen_prayers) do
-        M.times[prayer] = M.data.timings[prayer]
+    for _, prayer in pairs(M.shown_prayers) do
+        local clean_prayer = prayer:lower():gsub("%s+", ""):gsub("^%l", string.upper)
+        M.times[prayer] = M.data.timings[clean_prayer]
     end
 end
 

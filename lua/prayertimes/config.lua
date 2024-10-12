@@ -7,11 +7,24 @@ local defaults = {
         country = "GB",
         city    = "London",
     },
+
     method = 15,
+    later_asr = false,
+
     shown_prayers = {
-        fajr  = true,
+        imsak = false,
+        fajr = true,
+        sunrise = true,
         dhuhr = true,
+        asr = true,
+        maghrib = true,
+        sunset = false,
+        isha = true,
+        midnight = true,
+        firstthird = false,
+        lastthird = false,
     },
+
     tune = {
         imsak    = 0,
         fajr     = 0,
@@ -23,7 +36,7 @@ local defaults = {
         isha     = 0,
         midnight = 0,
     },
-    later_asr = false,
+
     gui = {
         alt_clock_format     = false,
         enable_prayer_emojis = false,
@@ -32,10 +45,11 @@ local defaults = {
 
 function M.setup(opts)
     M.options = vim.tbl_deep_extend("force", defaults, opts or {})
-    vim.api.nvim_create_user_command("Prayertimes", function()
-            require("prayertimes.popup").show_prayertimes()
-        end,
-        { nargs = 0 })
+    vim.api.nvim_create_user_command(
+        "Prayertimes",
+        function() require("prayertimes.popup").show_prayertimes() end,
+        { nargs = 0 }
+    )
 end
 
 return M
