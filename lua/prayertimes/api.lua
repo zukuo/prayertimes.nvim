@@ -46,15 +46,15 @@ M.tune = {
 }
 
 M.times = {
-    Imsak          = "00:00",
-    Fajr           = "00:00",
-    Sunrise        = "00:00",
-    Dhuhr          = "00:00",
-    Asr            = "00:00",
-    Maghrib        = "00:00",
-    Sunset         = "00:00",
-    Isha           = "00:00",
-    Midnight       = "00:00",
+    Imsak           = "00:00",
+    Fajr            = "00:00",
+    Sunrise         = "00:00",
+    Dhuhr           = "00:00",
+    Asr             = "00:00",
+    Maghrib         = "00:00",
+    Sunset          = "00:00",
+    Isha            = "00:00",
+    Midnight        = "00:00",
     ["First Third"] = "00:00",
     ["Last Third"]  = "00:00",
 }
