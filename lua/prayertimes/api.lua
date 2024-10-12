@@ -3,10 +3,6 @@ local config = require("prayertimes.config").options
 
 local M = {}
 
-function M.get_current_time(hr_type)
-    return os.date("%H:%M")
-end
-
 function M.get_current_date(hr_type)
     return os.date("%d %b")
 end
@@ -14,6 +10,15 @@ end
 function M.pad_text(text)
     return " " .. text .. " "
 end
+
+function M.make_tune_list()
+    local list = ""
+    for _, tune_name in pairs(M.tune_names) do
+        list = list .. M.tune[tune_name] .. ","
+    end
+    return list
+end
+
 
 M.chosen_prayers = {
     "Fajr",
@@ -25,27 +30,59 @@ M.chosen_prayers = {
     "Midnight",
 }
 
+M.tune_names = {
+    "Imsak",
+    "Fajr",
+    "Sunrise",
+    "Dhuhr",
+    "Asr",
+    "Maghrib",
+    "Sunset",
+    "Isha",
+    "Midnight",
+}
+
 M.times = {
-    Fajr = "00:00",
-    Sunrise = "00:00",
-    Dhuhr = "00:00",
-    Asr = "00:00",
-    Maghrib = "00:00",
-    Isha = "00:00",
+    Fajr     = "00:00",
+    Sunrise  = "00:00",
+    Dhuhr    = "00:00",
+    Asr      = "00:00",
+    Maghrib  = "00:00",
+    Isha     = "00:00",
     Midnight = "00:00",
+}
+
+M.tune = {
+    Imsak    = config.tune.imsak,
+    Fajr     = config.tune.fajr,
+    Sunrise  = config.tune.sunrise,
+    Dhuhr    = config.tune.dhuhr,
+    Asr      = config.tune.asr,
+    Maghrib  = config.tune.maghrib,
+    Sunset   = config.tune.sunset,
+    Isha     = config.tune.isha,
+    Midnight = config.tune.midnight,
+}
+
+M.queries = {
+    country = config.location.country,
+    city    = config.location.city,
+    method  = config.method,
+    school  = (config.later_asr and 1 or 0),
+    tune    = M.make_tune_list(),
 }
 
 M.data = {}
 
 function M.get_aladhan_times()
-    local today = os.date("%d-%m-%Y")
-    local base = "http://api.aladhan.com/v1/timingsByCity/"
-    local country, city, method = config.location.country, config.location.city, config.method
-    local query = string.format("?country=%s&city=%s&method=%d", country, city, method)
-    -- local tune = "&tune=0,-1,-1,4,-3,3,0,1,0"
+    local url = "http://api.aladhan.com/v1/timingsByCity/" .. os.date("%d-%m-%Y?")
+
+    for query, value in pairs(M.queries) do
+        url = string.format("%s%s=%s&", url, query, value)
+    end
 
     local res = curl.get {
-        url = base .. today .. query,
+        url = url,
         accept = "application/json",
         timeout = 2000,
     }

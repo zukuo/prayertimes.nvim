@@ -5,15 +5,27 @@ M.options = {}
 local defaults = {
     location = {
         country = "GB",
-        city = "London",
+        city    = "London",
     },
     method = 15,
     shown_prayers = {
-        fajr = true,
+        fajr  = true,
         dhuhr = true,
     },
+    tune = {
+        imsak    = 0,
+        fajr     = 0,
+        sunrise  = 0,
+        dhuhr    = 0,
+        asr      = 0,
+        maghrib  = 0,
+        sunset   = 0,
+        isha     = 0,
+        midnight = 0,
+    },
+    later_asr = false,
     gui = {
-        alt_clock_format = false,
+        alt_clock_format     = false,
         enable_prayer_emojis = false,
     }
 }
