@@ -118,7 +118,9 @@ function M.color_current_prayer(prayer)
     local time = os.date("%H:%M")
 
     for i = 1, #M.shown_prayers - 1, 1 do
-        if M.data.timings[M.format_titlecase(M.shown_prayers[i])] <= time and time < M.data.timings[M.format_titlecase(M.shown_prayers[i + 1])] then
+        if ((M.data.timings[M.format_titlecase(M.shown_prayers[i])] <= time) and
+            (time < M.data.timings[M.format_titlecase(M.shown_prayers[i + 1])])) or
+            (M.shown_prayers[i] == "Isha" and time >= M.data.timings[M.format_titlecase(M.shown_prayers[i])]) then
             to_color = M.shown_prayers[i]
         end
     end
