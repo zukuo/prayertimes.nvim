@@ -105,4 +105,21 @@ function M.update_times()
     end
 end
 
+function M.color_current_prayer(prayer)
+    local to_color = ""
+    local time = os.date("%H:%M")
+
+    for i = 1, #M.shown_prayers - 1, 1 do
+        if M.data.timings[M.shown_prayers[i]] <= time and time < M.data.timings[M.shown_prayers[i + 1]] then
+            to_color = M.shown_prayers[i]
+        end
+    end
+
+    if prayer == to_color then
+        return "String"
+    else
+        return ""
+    end
+end
+
 return M

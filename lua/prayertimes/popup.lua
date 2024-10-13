@@ -66,7 +66,7 @@ function M.show_prayertimes()
     for index, prayer in pairs(api.shown_prayers) do
         local num_of_spaces = width - #prayer - #api.times[prayer]
         local line_content = prayer .. string.rep(" ", num_of_spaces) .. api.times[prayer]
-        local prayer_with_time = NuiLine({ NuiText(line_content) })
+        local prayer_with_time = NuiLine({ NuiText(line_content, api.color_current_prayer(prayer)) })
         prayer_with_time:render(popup.bufnr, -1, index)
     end
 end
