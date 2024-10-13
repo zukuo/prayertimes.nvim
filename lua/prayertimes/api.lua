@@ -122,4 +122,21 @@ function M.color_current_prayer(prayer)
     end
 end
 
+function M.convert_to_12hr(time)
+    local hour = tonumber(time:sub(1, 2))
+    local minute = time:sub(4, 5)
+    local am, pm = "am", "pm"
+
+    if hour < 12 then
+        minute = minute .. am
+    elseif hour == 12 then
+        minute = minute .. pm
+    else
+        hour = hour - 12
+        minute = minute .. pm
+    end
+
+    return hour .. ":" .. minute
+end
+
 return M
