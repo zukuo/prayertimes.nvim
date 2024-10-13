@@ -11,6 +11,14 @@ function M.pad_text(text)
     return " " .. text .. " "
 end
 
+function M.format_lower(text)
+    return text:lower():gsub("%s+", "")
+end
+
+function M.format_titlecase(text)
+    return text:lower():gsub("%s+", ""):gsub("^%l", string.upper)
+end
+
 function M.make_tune_list()
     local list = ""
     for _, tune in pairs(M.tune) do
@@ -88,7 +96,7 @@ end
 function M.update_shown_prayers()
     local new_list = {}
     for _, shown_prayer in pairs(M.shown_prayers) do
-        local formatted_prayer = shown_prayer:lower():gsub("%s+", "")
+        local formatted_prayer = M.format_lower(shown_prayer)
         if config.shown_prayers[formatted_prayer] then
             table.insert(new_list, shown_prayer)
         end
@@ -100,7 +108,7 @@ function M.update_times()
     M.update_shown_prayers()
     M.data = M.get_aladhan_times()
     for _, prayer in pairs(M.shown_prayers) do
-        local clean_prayer = prayer:lower():gsub("%s+", ""):gsub("^%l", string.upper)
+        local clean_prayer = M.format_titlecase(prayer)
         M.times[prayer] = M.data.timings[clean_prayer]
     end
 end
@@ -110,7 +118,7 @@ function M.color_current_prayer(prayer)
     local time = os.date("%H:%M")
 
     for i = 1, #M.shown_prayers - 1, 1 do
-        if M.data.timings[M.shown_prayers[i]] <= time and time < M.data.timings[M.shown_prayers[i + 1]] then
+        if M.data.timings[M.format_titlecase(M.shown_prayers[i])] <= time and time < M.data.timings[M.format_titlecase(M.shown_prayers[i + 1])] then
             to_color = M.shown_prayers[i]
         end
     end

@@ -38,8 +38,7 @@ local defaults = {
     },
 
     gui = {
-        alt_clock_format     = false,
-        enable_prayer_emojis = false,
+        alt_clock_format = false,
     }
 }
 
