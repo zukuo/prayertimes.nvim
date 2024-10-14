@@ -15,7 +15,7 @@
 
 - Clean and minimal popup window that displays prayer times
 - Use a wide range of different calculation methods
-- Individually, finetune each prayer time to match your local area
+- Individually finetune each prayer time to match your local area
 - Customise the look and feel of what you want to be displayed
 
 ## ⚡ Requirements
@@ -57,12 +57,11 @@ Prayertimes comes with the following defaults:
 {
     location = {
         country = "GB", -- a country name or 2 character alpha ISO 3166 code
-        city    = "London",
+        city    = "London", -- name of your city
     },
-    method = 15, -- 
-    later_asr = false,
-    -- Choose which prayers to show on the popup
-    shown_prayers = {
+    method = 15, -- check out [Calculation Methods] for more details
+    later_asr = false, -- choose between the later Asr (Hanafi) or earlier asr (Shafi, Hanbali, Maliki)
+    shown_prayers = { -- choose which prayers to show on the popup
         imsak = false,
         fajr = true,
         sunrise = true,
@@ -75,8 +74,7 @@ Prayertimes comes with the following defaults:
         firstthird = false,
         lastthird = false,
     },
-    -- Add or subtract to each time
-    tune = {
+    tune = { -- add or subtract minutes for each prayer time
         imsak    = 0,
         fajr     = 0,
         sunrise  = 0,
@@ -88,12 +86,12 @@ Prayertimes comes with the following defaults:
         midnight = 0,
     },
     gui = {
-        alt_clock_format = false, -- change between 12-hour and 24-hour (default) clock format
+        alt_clock_format = false, -- change between 12-hour (alt) and 24-hour (default) clock format
     }
 }
 ```
 
-### Calculation Methods
+### 📏 Calculation Methods
 
 Since Prayertimes uses the [AlAdhan Prayer Times API](https://aladhan.com/prayer-times-api) under the hood, the methods they use are also applicable here.
 
