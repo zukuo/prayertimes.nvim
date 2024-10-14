@@ -39,6 +39,7 @@ local defaults = {
 
     gui = {
         alt_clock_format = false,
+        backdrop = true,
     }
 }
 

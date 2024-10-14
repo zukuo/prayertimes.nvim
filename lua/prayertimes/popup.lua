@@ -11,6 +11,26 @@ function M.show_prayertimes()
     local api = require("prayertimes.api")
     local config = require("prayertimes.config").options
 
+    -- Dark Backdrop
+    vim.api.nvim_set_hl(0, "DarkBackdrop", { bg = "#000000", default = true })
+    local backdrop = Popup({
+        enter = false,
+        focusable = false,
+        position = "100%",
+        size = {
+            height = "100%",
+            width = "100%",
+        },
+        border = 'none',
+        win_options = {
+            winblend = 60,
+            winhighlight = "Normal:DarkBackdrop"
+        },
+    })
+    if config.gui.backdrop then
+        backdrop:mount()
+    end
+
     -- Get latest prayer times
     api.update_times()
 
@@ -52,14 +72,17 @@ function M.show_prayertimes()
 
     popup:on(event.BufLeave, function()
         popup:unmount()
+        backdrop:unmount()
     end)
 
     popup:map("n", "<esc>", function()
         popup:unmount()
+        backdrop:unmount()
     end, { noremap = true })
 
     popup:map("n", "q", function()
         popup:unmount()
+        backdrop:unmount()
     end, { noremap = true })
 
     -- Draw Prayer & Times to Buffer
