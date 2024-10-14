@@ -91,6 +91,7 @@ Prayertimes comes with the following defaults:
         },
         gui = {
             alt_clock_format = false, -- change between 12-hour (alt) and 24-hour (default) clock format
+            backdrop = true, -- enable a darkened backdrop behind the times popup
         }
     }
 <
