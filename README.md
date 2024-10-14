@@ -36,12 +36,12 @@ Install the plugin with your preferred package manager:
    lazy = true,
    opts = {
       location = { -- set a country name or 2 character alpha ISO 3166 code 
-         country = "GB", 
+         country = "GB",
          city = "London",
       }
       -- add more config here
       -- or leave empty for defaults
-   }
+   },
    keys = {
        { "<leader>pt", "<cmd>Prayertimes<cr>", desc = "Show Prayer Times" },
    },
