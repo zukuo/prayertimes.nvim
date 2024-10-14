@@ -6,7 +6,8 @@
 
 <div align="center">
   <div>Get accurate Islamic prayer times in your editor.</div><br />
-  <img src="" width="700" />
+  <img width="700" alt="prayertimes-popup" src="https://github.com/user-attachments/assets/f0da8a6a-c154-44f1-9663-226c0be9f27a">
+
 </div>
 
 <!-- panvimdoc-ignore-end -->
