@@ -33,14 +33,18 @@ Install the plugin with your preferred package manager:
 {
    "zukuo/prayertimes.nvim",
    dependencies = { "MunifTanjim/nui.nvim", "nvim-lua/plenary.nvim" },
+   lazy = true,
    opts = {
-      location = {
-         country = "GB", -- a country name or 2 character alpha ISO 3166 code 
+      location = { -- set a country name or 2 character alpha ISO 3166 code 
+         country = "GB", 
          city = "London",
       }
       -- add more config here
       -- or leave empty for defaults
    }
+   keys = {
+       { "<leader>pt", "<cmd>Prayertimes<cr>", desc = "Show Prayer Times" },
+   },
 },
 ```
 
