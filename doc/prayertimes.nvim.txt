@@ -1,4 +1,4 @@
-*prayertimes.nvim.txt*       For NVIM v0.8.0      Last change: 2024 October 14
+*prayertimes.nvim.txt*        For NVIM v0.8.0        Last change: 2025 July 25
 
 ==============================================================================
 Table of Contents                         *prayertimes.nvim-table-of-contents*
